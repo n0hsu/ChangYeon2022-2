@@ -33,7 +33,7 @@
 // global variables
 float  dist_ema, dist_prev = _DIST_MAX; // unit: mm
 unsigned long last_sampling_time; // unit: ms
-float dist_range; //* 0 to 100
+float _DUTY_BY_RANGE; //* 0 to 100
 
 Servo myservo;
 
@@ -82,14 +82,14 @@ void loop() {
   // add your code here!
   // Use _TARGET_LOW, _TARGET_HIGH
  
-  dist_range = _DUTY_MIN+(_DUTY_MAX-_DUTY_MIN)*(dist_ema-_DIST_MIN)/_DIST_MIN;
+  _DUTY_BY_RANGE = (_DUTY_MIN+(_DUTY_MAX-_DUTY_MIN))*((dist_ema-_TARGET_LOW)/(_TARGET_HIGH - _TARGET_LOW)); //* (Duty range)*(0~100range)
   
   if (dist_ema < _TARGET_LOW) {
     myservo.writeMicroseconds(_DUTY_MIN);
   } else if (dist_ema > _TARGET_HIGH) {
     myservo.writeMicroseconds(_DUTY_MAX);
   } else {   
-    myservo.writeMicroseconds(dist_range);
+    myservo.writeMicroseconds(_DUTY_BY_RANGE);
   }
   // output the distance to the serial port
   Serial.print("Min:");    Serial.print(_DIST_MIN);
