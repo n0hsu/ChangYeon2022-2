@@ -16,7 +16,7 @@
 #define TIMEOUT ((INTERVAL / 2) * 1000.0) // maximum echo waiting time (unit: usec)
 #define SCALE (0.001 * 0.5 * SND_VEL) // coefficent to convert duration to distance
 
-#define _EMA_ALPHA 0.1    // EMA weight of new sample (range: 0 to 1)
+#define _EMA_ALPHA 0.6    // EMA weight of new sample (range: 0 to 1)
                           // Setting EMA to 1 effectively disables EMA filter.
 
 // Target Distance
@@ -75,7 +75,7 @@ void loop() {
   }
 
   // Apply ema filter here  
-  dist_ema = (_EMA_ALPHA)*dist_raw + (1-_EMA_ALPHA)*dist_prev;
+  dist_ema = (_EMA_ALPHA)*dist_raw + (1-_EMA_ALPHA)*dist_ema;
 
   // adjust servo position according to the USS read value
 
