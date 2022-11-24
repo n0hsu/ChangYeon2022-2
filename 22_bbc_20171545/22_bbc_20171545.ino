@@ -83,12 +83,10 @@ void loop() {
     // bang bang control
     if(dist_ema>dist_target) { // Replace 1 with a proper test expression using dist_target and dist_ema.
       duty_target = _DUTY_NEU+_BANGBANG_RANGE; // Complete this line using _BANGBANG_RANGE.
-      myservo.writeMicroseconds(duty_target);
       digitalWrite(PIN_LED, 0);
     }
     else {
       duty_target = _DUTY_NEU-_BANGBANG_RANGE; // Complete this line using _BANGBANG_RANGE.
-      myservo.writeMicroseconds(duty_target);
       digitalWrite(PIN_LED, 1);
     }
   }
